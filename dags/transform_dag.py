@@ -3,8 +3,8 @@ import os
 import logging
 
 from airflow import DAG
-from airflow.operators.python_operator import PythonOperator, BranchPythonOperator
 from airflow.models import Variable
+from airflow.operators.python_operator import PythonOperator
 from datetime import datetime, timedelta
 from airflow.operators.custom_plugin import ClusterCheckSensor
 from airflow.operators import ClusterCheckSensor
@@ -46,57 +46,57 @@ def submit_to_emr(**kwargs):
 
 #
 def dag_done(**kwargs):
-    Variable.set("dag_normalize_state", "done")
+    Variable.set("dag_transform_state", "done")
 
 
-transform_weather = PythonOperator(
+transform_business = PythonOperator(
     task_id='transform_weather',
     python_callable = submit_to_emr,
     params={
-        "file" : '/root/airflow/dags/transform/weather.py',
+        "file" : '/root/airflow/dags/transform/business.py',
         "log" : False
     },
     dag=dag
 )
 
-transform_airport_weather = PythonOperator(
+transform_checkin = PythonOperator(
     task_id='transform_airport_weather',
     python_callable = submit_to_emr,
     params={
-        "file" : '/root/airflow/dags/transform/airport_weather.py',
+        "file" : '/root/airflow/dags/transform/checkin.py',
         "log" : False
     },
     dag=dag
 )
 
-transform_codes = PythonOperator(
+transform_restaurants = PythonOperator(
     task_id='transform_codes',
     python_callable=submit_to_emr,
-    params={"file" : '/root/airflow/dags/transform/codes.py', "log" : False},
+    params={"file" : '/root/airflow/dags/transform/restaurants.py', "log" : False},
     dag=dag)
 
-transform_city = PythonOperator(
+transform_review = PythonOperator(
     task_id='transform_city',
     python_callable=submit_to_emr,
-    params={"file" : '/root/airflow/dags/transform/city.py', "log" : False},
+    params={"file" : '/root/airflow/dags/transform/review.py', "log" : False},
     dag=dag)
 
 
-transform_demographics = PythonOperator(
+transform_tip = PythonOperator(
     task_id='transform_demographics',
     python_callable = submit_to_emr,
-    params={"file" : '/root/airflow/dags/transform/demographics.py', "log" : False},
+    params={"file" : '/root/airflow/dags/transform/tip.py', "log" : False},
     dag=dag
 )
 
 quality_check = PythonOperator(
-    task_id = 'normalize_quality_check',
+    task_id = 'transform_quality_check',
     python_callable = submit_to_emr,
-    params = {"file" : '/root/airflow/dags/transform/normalize_quality_check.py', "log" : True},
+    params = {"file" : '/root/airflow/dags/transform/transform_quality_check.py', "log" : True},
     dag=dag
 )
 
-sensor_task = ClusterCheckSensor(
+cluster_check_task = ClusterCheckSensor(
     task_id='cluster_check',
     poke_interval=60,
     dag=dag)
@@ -108,7 +108,7 @@ done = PythonOperator(
 )
 
 #
-sensor_task >> transform_city >> transform_codes
+cluster_check_task >> transform_city >> transform_codes
 #
 transform_codes >> transform_demographics >> transform_airport_weather
 transform_codes >> transform_weather >> transform_airport_weather

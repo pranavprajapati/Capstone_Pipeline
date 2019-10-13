@@ -27,36 +27,9 @@ region = get_region()
 emr = client(region)
 
 
-# Check if all ETL are finished, not necessarily successful
+
 # Sensor operators keep executing at a time interval and succeed when
 # a criteria is met and fail if and when they time out.
-class ETLDAGCheckCompleteSensor(BaseSensorOperator):
-    @apply_defaults
-    def __init__(self, *args, **kwargs):
-        return super(ETLDAGCheckCompleteSensor, self).__init__(*args, **kwargs)
-
-    def poke(self, context):
-        dag_normalize_state = Variable.get("dag_normalize_state")
-        dag_analytics_state = Variable.get("dag_analytics_state")
-        if dag_normalize_state != 'na' and dag_analytics_state != 'na':
-            return True
-        else:
-            return False
-
-
-# Check if normalized tables are successfully created
-class NormalizeDAGCheckCompleteSensor(BaseSensorOperator):
-    @apply_defaults
-    def __init__(self, *args, **kwargs):
-        return super(NormalizeDAGCheckCompleteSensor, self).__init__(*args, **kwargs)
-
-    def poke(self, context):
-        dag_normalize_state = Variable.get("dag_normalize_state")
-        if dag_normalize_state == 'done':
-            return True
-        else:
-            return False
-
 
 # Check if cluster is up and available
 class ClusterCheckSensor(BaseSensorOperator):
@@ -82,4 +55,4 @@ class ClusterCheckSensor(BaseSensorOperator):
 
 class CustomPlugin(AirflowPlugin):
     name = "custom_plugin"
-    operators = [ClusterCheckSensor, ETLDAGCheckCompleteSensor, NormalizeDAGCheckCompleteSensor]
+    operators = [ClusterCheckSensor]
