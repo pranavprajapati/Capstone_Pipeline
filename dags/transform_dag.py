@@ -50,7 +50,7 @@ def dag_done(**kwargs):
 
 
 transform_business = PythonOperator(
-    task_id='transform_weather',
+    task_id='transform_business',
     python_callable = submit_to_emr,
     params={
         "file" : '/root/airflow/dags/transform/business.py',
@@ -60,7 +60,7 @@ transform_business = PythonOperator(
 )
 
 transform_checkin = PythonOperator(
-    task_id='transform_airport_weather',
+    task_id='transform_checkin',
     python_callable = submit_to_emr,
     params={
         "file" : '/root/airflow/dags/transform/checkin.py',
@@ -70,20 +70,20 @@ transform_checkin = PythonOperator(
 )
 
 transform_restaurants = PythonOperator(
-    task_id='transform_codes',
+    task_id='transform_restaurants',
     python_callable=submit_to_emr,
     params={"file" : '/root/airflow/dags/transform/restaurants.py', "log" : False},
     dag=dag)
 
 transform_review = PythonOperator(
-    task_id='transform_city',
+    task_id='transform_review',
     python_callable=submit_to_emr,
     params={"file" : '/root/airflow/dags/transform/review.py', "log" : False},
     dag=dag)
 
 
 transform_tip = PythonOperator(
-    task_id='transform_demographics',
+    task_id='transform_tip',
     python_callable = submit_to_emr,
     params={"file" : '/root/airflow/dags/transform/tip.py', "log" : False},
     dag=dag

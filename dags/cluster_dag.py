@@ -5,7 +5,6 @@ from airflow import DAG
 from airflow.operators.python_operator import PythonOperator
 from datetime import datetime, timedelta
 from airflow.models import Variable
-from airflow.operators.custom_s3 import ######
 from airflow.operators.custom_plugin import S3DataExistsOperator
 
 default_args = {

@@ -17,10 +17,8 @@ def check(path, table):
 
 
 
-check("s3a://de-capstone/lake/city/", "city")
-check("s3a://de-capstone/lake/codes/state_code/", "state_code")
-check("s3a://de-capstone/lake/codes/country_code/", "country_code")
-check("s3a://de-capstone/lake/codes/airport_code/", "airport_code")
-check("s3a://de-capstone/lake/us_cities_demographics/", "us_cities_demographics")
-check("s3a://de-capstone/lake/us_cities_temperatures/", "us_cities_temperatures")
-check("s3a://de-capstone/lake/us_airports_weather/", "us_airport_weather")
+check("s3a://psp-capstone/lake/", "business")
+check("s3a://psp-capstone/lake/", "review")
+check("s3a://psp-capstone/lake/", "checkin")
+check("s3a://psp-capstone/lake/", "user")
+check("s3a://psp-capstone/lake/", "tip")
