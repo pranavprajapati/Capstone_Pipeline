@@ -15,4 +15,4 @@ checkin = spark.sql("""select business_id,dates,date_only,day_number,
                     size(split(date, ",")) as checkin_count
               from countd""")
 
-checkin.write.mode("overwrite").parquet("s3://psp-capstone/lake/checkin.csv/")
+checkin.write.mode("overwrite").parquet("s3://psp-capstone/lake/checkin/")

@@ -2,11 +2,10 @@ from pyspark.sql.functions import col
 import pyspark.sql.functions as F
 from pyspark.sql.types import *
 from pyspark.sql.functions import udf
-spark.sparkContext.setLogLevel('WARN')
 
+spark.sparkContext.setLogLevel('WARN')
 Logger= spark._jvm.org.apache.log4j.Logger
 mylogger = Logger.getLogger("DAG")
-
 
 def check(path, table):
     df = spark.read.parquet(path)
@@ -16,9 +15,9 @@ def check(path, table):
         mylogger.warn("{} FAIL".format(table))
 
 
-
-check("s3a://psp-capstone/lake/", "business")
-check("s3a://psp-capstone/lake/", "review")
-check("s3a://psp-capstone/lake/", "checkin")
-check("s3a://psp-capstone/lake/", "user")
-check("s3a://psp-capstone/lake/", "tip")
+check("s3a://psp-capstone/lake/business/", "business")
+check("s3a://psp-capstone/lake/business_rest/", "business_rest")
+check("s3a://psp-capstone/lake/review", "review/")
+check("s3a://psp-capstone/lake/checkin", "checkin/")
+check("s3a://psp-capstone/lake/user", "user/")
+check("s3a://psp-capstone/lake/tip", "tip/")

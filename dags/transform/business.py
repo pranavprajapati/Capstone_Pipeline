@@ -11,7 +11,10 @@ business = business.withColumn('category_1', bsplit.getItem(0))
 business = business.withColumn('category_2', bsplit.getItem(1))
 business = business.withColumn('category_3', bsplit.getItem(2))
 
-business.write.mode("overwrite").parquet("s3://psp-capstone/lake/business.csv/")
+business = business.withColumnRenamed('business_id', 'b_id')
+business = business.withColumnRenamed('stars', 'star')
+
+business.write.mode("overwrite").parquet("s3://psp-capstone/lake/business/")
 
 # EDA to try out. Open a jupter session and try the following
 
