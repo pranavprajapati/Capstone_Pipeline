@@ -6,12 +6,13 @@ from airflow.operators.dummy_operator import DummyOperator
 from airflow.operators.python_operator import PythonOperator
 from datetime import datetime, timedelta
 from airflow.models import Variable
-from airflow.operators.custom_plugin import S3DataExistsOperator
+#from airflow.operators.custom_plugin import S3DataExistsOperator
+#from airflow.operators import S3DataExistsOperator
 
 default_args = {
     'owner': 'airflow',
     'depends_on_past': False,
-    'start_date': datetime(2018, 1, 1),
+    'start_date': datetime(2018, 5, 5),
     'retries': 0,
     'email_on_failure': False,
     'email_on_retry': False,
@@ -20,22 +21,19 @@ default_args = {
 
 s3data = 's3://psp-capstone/raw/'
 s3bucket = 'psp-capstone'
-lookup_prefix = 'raw/'
+lookup_prefix = 'psp-capstone/raw/'
 
 # Initialize the DAG
 # Concurrency --> Number of tasks allowed to run concurrently
-dag = DAG('dag_cluster',schedule_interval='@daily', default_args=default_args)
+dag = DAG('dag_cluster',schedule_interval='@once', default_args=default_args)
 
-#Variable.set("dag_analytics_state", "na")
-#Variable.set("dag_transform_state", "na")
+
 
 start_operator = DummyOperator(task_id='Begin_execution',  dag=dag)
-
-def dag_done(**kwargs):
-    Variable.set("dag_normalize_state", "done")
-
 # Check all files exist on S3
+done = DummyOperator(task_id='Done',  dag=dag)
 
+"""
 check_business_s3  = S3DataExistsOperator(
     task_id='check_business_on_s3',
     dag=dag,
@@ -80,14 +78,10 @@ check_user_s3  = S3DataExistsOperator(
     prefix=lookup_prefix,
     key = 'yelp_academic_dataset_user.json'
 )
-
-done = PythonOperator(
-    task_id = "done",
-    python_callable=dag_done,
-    dag=dag
-)
-start_operator >> check_business_s3 >>done
-#start_operator >> check_checkin_s3 >>done
-#start_operator >> check_review_s3 >>done
-#start_operator >> check_tip_s3 >>done
-#start_operator >> check_user_s3 >>done
+"""
+start_operator >> done
+#start_operator >> check_business_s3
+#start_operator >> check_checkin_s3
+#start_operator >> check_review_s3
+#start_operator >> check_tip_s3
+#start_operator >> check_user_s3

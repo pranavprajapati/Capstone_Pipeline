@@ -1,0 +1,43 @@
+[2019-10-17 01:23:57,336] {taskinstance.py:616} INFO - Dependencies all met for <TaskInstance: dag_cluster.Begin_execution 2019-10-17T01:23:37.860579+00:00 [queued]>
+[2019-10-17 01:23:57,351] {taskinstance.py:616} INFO - Dependencies all met for <TaskInstance: dag_cluster.Begin_execution 2019-10-17T01:23:37.860579+00:00 [queued]>
+[2019-10-17 01:23:57,352] {taskinstance.py:834} INFO - 
+--------------------------------------------------------------------------------
+[2019-10-17 01:23:57,353] {taskinstance.py:835} INFO - Starting attempt 1 of 1
+[2019-10-17 01:23:57,353] {taskinstance.py:836} INFO - 
+--------------------------------------------------------------------------------
+[2019-10-17 01:23:57,403] {taskinstance.py:855} INFO - Executing <Task(DummyOperator): Begin_execution> on 2019-10-17T01:23:37.860579+00:00
+[2019-10-17 01:23:57,404] {base_task_runner.py:133} INFO - Running: ['airflow', 'run', 'dag_cluster', 'Begin_execution', '2019-10-17T01:23:37.860579+00:00', '--job_id', '4', '--pool', 'default_pool', '--raw', '-sd', 'DAGS_FOLDER/cluster_dag.py', '--cfg_path', '/tmp/tmplv9xt71x']
+[2019-10-17 01:23:58,396] {base_task_runner.py:115} INFO - Job 4: Subtask Begin_execution [2019-10-17 01:23:58,392] {plugins_manager.py:148} ERROR - No module named 'operators'
+[2019-10-17 01:23:58,397] {base_task_runner.py:115} INFO - Job 4: Subtask Begin_execution Traceback (most recent call last):
+[2019-10-17 01:23:58,397] {base_task_runner.py:115} INFO - Job 4: Subtask Begin_execution   File "/usr/local/lib/python3.7/site-packages/airflow/plugins_manager.py", line 142, in <module>
+[2019-10-17 01:23:58,398] {base_task_runner.py:115} INFO - Job 4: Subtask Begin_execution     m = imp.load_source(namespace, filepath)
+[2019-10-17 01:23:58,398] {base_task_runner.py:115} INFO - Job 4: Subtask Begin_execution   File "/usr/local/lib/python3.7/imp.py", line 171, in load_source
+[2019-10-17 01:23:58,399] {base_task_runner.py:115} INFO - Job 4: Subtask Begin_execution     module = _load(spec)
+[2019-10-17 01:23:58,399] {base_task_runner.py:115} INFO - Job 4: Subtask Begin_execution   File "<frozen importlib._bootstrap>", line 696, in _load
+[2019-10-17 01:23:58,400] {base_task_runner.py:115} INFO - Job 4: Subtask Begin_execution   File "<frozen importlib._bootstrap>", line 677, in _load_unlocked
+[2019-10-17 01:23:58,400] {base_task_runner.py:115} INFO - Job 4: Subtask Begin_execution   File "<frozen importlib._bootstrap_external>", line 728, in exec_module
+[2019-10-17 01:23:58,401] {base_task_runner.py:115} INFO - Job 4: Subtask Begin_execution   File "<frozen importlib._bootstrap>", line 219, in _call_with_frames_removed
+[2019-10-17 01:23:58,402] {base_task_runner.py:115} INFO - Job 4: Subtask Begin_execution   File "/usr/local/airflow/plugins/__init__.py", line 3, in <module>
+[2019-10-17 01:23:58,402] {base_task_runner.py:115} INFO - Job 4: Subtask Begin_execution     import operators
+[2019-10-17 01:23:58,403] {base_task_runner.py:115} INFO - Job 4: Subtask Begin_execution ModuleNotFoundError: No module named 'operators'
+[2019-10-17 01:23:58,403] {base_task_runner.py:115} INFO - Job 4: Subtask Begin_execution [2019-10-17 01:23:58,396] {plugins_manager.py:149} ERROR - Failed to import plugin /usr/local/airflow/plugins/__init__.py
+[2019-10-17 01:23:58,440] {base_task_runner.py:115} INFO - Job 4: Subtask Begin_execution [2019-10-17 01:23:58,434] {plugins_manager.py:148} ERROR - No module named 'botocore'
+[2019-10-17 01:23:58,442] {base_task_runner.py:115} INFO - Job 4: Subtask Begin_execution Traceback (most recent call last):
+[2019-10-17 01:23:58,443] {base_task_runner.py:115} INFO - Job 4: Subtask Begin_execution   File "/usr/local/lib/python3.7/site-packages/airflow/plugins_manager.py", line 142, in <module>
+[2019-10-17 01:23:58,444] {base_task_runner.py:115} INFO - Job 4: Subtask Begin_execution     m = imp.load_source(namespace, filepath)
+[2019-10-17 01:23:58,445] {base_task_runner.py:115} INFO - Job 4: Subtask Begin_execution   File "/usr/local/lib/python3.7/imp.py", line 171, in load_source
+[2019-10-17 01:23:58,447] {base_task_runner.py:115} INFO - Job 4: Subtask Begin_execution     module = _load(spec)
+[2019-10-17 01:23:58,448] {base_task_runner.py:115} INFO - Job 4: Subtask Begin_execution   File "<frozen importlib._bootstrap>", line 696, in _load
+[2019-10-17 01:23:58,449] {base_task_runner.py:115} INFO - Job 4: Subtask Begin_execution   File "<frozen importlib._bootstrap>", line 677, in _load_unlocked
+[2019-10-17 01:23:58,451] {base_task_runner.py:115} INFO - Job 4: Subtask Begin_execution   File "<frozen importlib._bootstrap_external>", line 728, in exec_module
+[2019-10-17 01:23:58,451] {base_task_runner.py:115} INFO - Job 4: Subtask Begin_execution   File "<frozen importlib._bootstrap>", line 219, in _call_with_frames_removed
+[2019-10-17 01:23:58,452] {base_task_runner.py:115} INFO - Job 4: Subtask Begin_execution   File "/usr/local/airflow/plugins/custom_operator.py", line 8, in <module>
+[2019-10-17 01:23:58,453] {base_task_runner.py:115} INFO - Job 4: Subtask Begin_execution     from airflow.hooks.S3_hook import S3Hook
+[2019-10-17 01:23:58,454] {base_task_runner.py:115} INFO - Job 4: Subtask Begin_execution   File "/usr/local/lib/python3.7/site-packages/airflow/hooks/S3_hook.py", line 19, in <module>
+[2019-10-17 01:23:58,455] {base_task_runner.py:115} INFO - Job 4: Subtask Begin_execution     from botocore.exceptions import ClientError
+[2019-10-17 01:23:58,456] {base_task_runner.py:115} INFO - Job 4: Subtask Begin_execution ModuleNotFoundError: No module named 'botocore'
+[2019-10-17 01:23:58,456] {base_task_runner.py:115} INFO - Job 4: Subtask Begin_execution [2019-10-17 01:23:58,440] {plugins_manager.py:149} ERROR - Failed to import plugin /usr/local/airflow/plugins/custom_operator.py
+[2019-10-17 01:23:58,476] {base_task_runner.py:115} INFO - Job 4: Subtask Begin_execution [2019-10-17 01:23:58,476] {__init__.py:51} INFO - Using executor SequentialExecutor
+[2019-10-17 01:23:58,889] {base_task_runner.py:115} INFO - Job 4: Subtask Begin_execution [2019-10-17 01:23:58,888] {dagbag.py:90} INFO - Filling up the DagBag from /usr/local/airflow/dags/cluster_dag.py
+[2019-10-17 01:23:58,970] {base_task_runner.py:115} INFO - Job 4: Subtask Begin_execution [2019-10-17 01:23:58,969] {cli.py:516} INFO - Running <TaskInstance: dag_cluster.Begin_execution 2019-10-17T01:23:37.860579+00:00 [running]> on host 614b7d808020
+[2019-10-17 01:24:02,219] {logging_mixin.py:95} INFO - [[34m2019-10-17 01:24:02,218[0m] {[34mlocal_task_job.py:[0m105} INFO[0m - Task exited with return code 0[0m
