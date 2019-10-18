@@ -9,7 +9,7 @@ import pyspark.sql.functions as f
 import findspark
 import pyspark
 from pyspark.sql import SparkSession
-from pyspark.sql.functions import udf, col,split, expr
+from pyspark.sql.functions import udf, col,split,expr
 from pyspark.sql.functions import year, month, dayofmonth, hour, weekofyear, date_format,isnan,isnull, when, count
 from pyspark.sql.types import StructType, StructField, StringType, DoubleType, LongType, ShortType,BooleanType, TimestampType
 
@@ -25,15 +25,19 @@ hadoop_conf.set("fs.s3n.impl", "org.apache.hadoop.fs.s3native.NativeS3FileSystem
 hadoop_conf.set("fs.s3n.awsAccessKeyId", "awsAccessKeyId")
 hadoop_conf.set("fs.s3n.awsSecretAccessKey","awsSecretAccessKey")
 
-checkin = spark.read.format('csv').load('s3n://psp-capstone/psp-capstone/raw/yelp_academic_dataset_checkin.csv', header=True)
+spark.sparkContext.setLogLevel('WARN')
+Logger= spark._jvm.org.apache.log4j.Logger
+mylogger = Logger.getLogger("DAG")
 
-checkin = checkin.withColumn("date_only",expr("to_date(date, 'yyyy-MM-dd')"))
-checkin = checkin.select('date','date_only','business_id', date_format('date_only', 'u').alias('day_number'), date_format('date_only', 'E').alias('day'))
+def check(path, table):
+    df = spark.read.parquet(path)
+    if len(df.columns) > 0 and df.count() > 0:
+        mylogger.warn("{} SUCCESS".format(table))
 
-checkin.createOrReplaceTempView("countd")
-checkin = spark.sql("""select business_id,date,date_only,day_number,
-                    day,
-                    size(split(date, ",")) as checkin_count
-              from countd""")
+    else:
+        mylogger.warn("{} FAIL".format(table))
 
-checkin.write.mode("overwrite").parquet("s3n://psp-capstone/lake/checkin/")
+
+check("s3n://psp-capstone/lake/business/", "business/")
+check("s3n://psp-capstone/lake/business_rest/", "business_rest/")
+check("s3n://psp-capstone/lake/review", "review/")

@@ -1,4 +1,3 @@
-
 import logging
 
 from airflow.models import BaseOperator

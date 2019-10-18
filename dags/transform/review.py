@@ -1,14 +1,13 @@
 import configparser
 from datetime import datetime
 import os
-import boto3
 import datetime
 import pandas as pd
 from pyspark import SparkConf
 from pyspark.context import SparkContext
 import pyspark.sql.functions as f
 import findspark
-
+import pyspark
 from pyspark.sql import SparkSession
 from pyspark.sql.functions import udf, col,split,expr
 from pyspark.sql.functions import year, month, dayofmonth, hour, weekofyear, date_format,isnan,isnull, when, count
@@ -23,12 +22,13 @@ findspark.init()
 sc=spark.sparkContext
 hadoop_conf=sc._jsc.hadoopConfiguration()
 hadoop_conf.set("fs.s3n.impl", "org.apache.hadoop.fs.s3native.NativeS3FileSystem")
-hadoop_conf.set("fs.s3n.awsAccessKeyId", "AKIA2RG2B4ULSRDQY6LW")
-hadoop_conf.set("fs.s3n.awsSecretAccessKey","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")
+hadoop_conf.set("fs.s3n.awsAccessKeyId", "awsAccessKeyId")
+hadoop_conf.set("fs.s3n.awsSecretAccessKey","awsSecretAccessKey")
 
-review = spark.read.format('csv').load('s3://psp-capstone/raw/yelp_academic_dataset_review.json')
-business = spark.read.format('csv').load('s3://psp-capstone/raw/yelp_academic_dataset_business.csv', header=True)
+review = spark.read.format('json').load('s3n://psp-capstone/psp-capstone/raw/yelp_academic_dataset_review.json')
+business = spark.read.format('csv').load('s3n://psp-capstone/psp-capstone/raw/yelp_academic_dataset_business.csv', header=True)
 
+business = business.drop('attributes')
 bsplit = split(business['categories'], ',')
 business = business.withColumn('category_1', bsplit.getItem(0))
 business = business.withColumn('category_2', bsplit.getItem(1))
@@ -47,4 +47,4 @@ grouped_review = review_star_three.groupby('name').count()
 review_sort = grouped_review.sort('count',ascending=False)
 #review_sort.show(10)
 
-review.write.mode("overwrite").parquet("s3://psp-capstone/lake/review/")
+review.write.mode("overwrite").parquet("s3n://psp-capstone/lake/review/")

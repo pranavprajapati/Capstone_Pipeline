@@ -6,8 +6,6 @@ from airflow.operators.python_operator import PythonOperator
 from airflow.operators import BashOperator
 from datetime import datetime, timedelta
 from airflow.models import Variable
-from airflow.operators.custom_plugin import S3DataExistsOperator
-from airflow.operators import S3DataExistsOperator
 
 default_args = {
     'owner': 'airflow',
@@ -19,25 +17,34 @@ default_args = {
     'provide_context': True
 }
 
+#Edit according to your bucket and paths
 s3data = 's3://psp-capstone/raw/'
 s3bucket = 'psp-capstone'
 lookup_prefix = 'psp-capstone/raw/'
 
-# Initialize the DAG
-# Concurrency --> Number of tasks allowed to run concurrently
-dag = DAG('dag_cluster',schedule_interval='@monthly', default_args=default_args)
+dag = DAG('trans_parquet',schedule_interval='@monthly', default_args=default_args)
 
-#Variable.set("dag_analytics_state", "na")
-#Variable.set("dag_transform_state", "na")
+done_operator = DummyOperator(task_id='Done_execution',  dag=dag)
 
-start_operator = DummyOperator(task_id='Begin_execution',  dag=dag)
-
-
-tip_transform = BashOperator(
-    task_id='tip_transform',
-    bash_command='python /Users/pranavprajapati/Desktop/Projects_2019/Capstone_Pipeline/dags/transform/tip.py',
+# All Bash Operators- add file directory
+review_transform = BashOperator(
+    task_id='review_transform',
+    bash_command='python /airflow/dags/transform/review.py',
     dag=dag)
 
+business_transform = BashOperator(
+    task_id='business_transform',
+    bash_command='python /airflow/dags/transform/business.py',
+    dag=dag)
 
+restaurant_create = BashOperator(
+    task_id='restaurant_create',
+    bash_command='python /airflow/dags/transform/restaurant.py',
+    dag=dag)
 
-start_operator >> tip_transform
+quality_transform2 = BashOperator(
+    task_id='transform_quality_check2',
+    bash_command='python /airflow/dags/transform/second_quality_check.py',
+    dag=dag)
+
+business_transform >>restaurant_create >>review_transform >>quality_transform2 >>done_operator

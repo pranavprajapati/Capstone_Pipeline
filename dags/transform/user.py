@@ -1,14 +1,13 @@
 import configparser
 from datetime import datetime
 import os
-import boto3
 import datetime
 import pandas as pd
 from pyspark import SparkConf
 from pyspark.context import SparkContext
 import pyspark.sql.functions as f
 import findspark
-
+import pyspark
 from pyspark.sql import SparkSession
 from pyspark.sql.functions import udf, col,split,expr
 from pyspark.sql.functions import year, month, dayofmonth, hour, weekofyear, date_format,isnan,isnull, when, count
@@ -23,10 +22,12 @@ findspark.init()
 sc=spark.sparkContext
 hadoop_conf=sc._jsc.hadoopConfiguration()
 hadoop_conf.set("fs.s3n.impl", "org.apache.hadoop.fs.s3native.NativeS3FileSystem")
-hadoop_conf.set("fs.s3n.awsAccessKeyId", "AKIA2RG2B4ULSRDQY6LW")
-hadoop_conf.set("fs.s3n.awsSecretAccessKey","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")
+hadoop_conf.set("fs.s3n.awsAccessKeyId", "awsAccessKeyId")
+hadoop_conf.set("fs.s3n.awsSecretAccessKey","awsSecretAccessKey")
 
-user = spark.read.format('csv').load('s3n://psp-capstone/psp-capstone/raw/yelp_academic_dataset_user.json')
+user = spark.read.format('json').load('s3n://psp-capstone/psp-capstone/raw/yelp_academic_dataset_user.json')
 
+columns_to_drop = ['compliment_list','compliment_more', 'compliment_note','compliment_photos','compliment_plain','compliment_profile','compliment_writer']
+user = user.drop(*columns_to_drop)
 
 user.write.mode("overwrite").parquet("s3n://psp-capstone/lake/user/")

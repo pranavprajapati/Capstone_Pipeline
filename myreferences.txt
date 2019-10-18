@@ -1,0 +1,20 @@
+All Capstone references
+https://stackoverflow.com/questions/1871524/how-can-i-convert-json-to-csv
+https://stackoverflow.com/questions/21462879/in-line-split-1-what-does-the-1-in-the-square-brackets-indicate-in-pytho
+https://boto3.amazonaws.com/v1/documentation/api/latest/guide/s3-uploading-files.html
+https://stackoverflow.com/questions/39235704/split-spark-dataframe-string-column-into-multiple-columns
+https://stackoverflow.com/questions/49301373/pyspark-filter-dataframe-based-on-multiple-conditions
+https://airflow.apache.org/_modules/airflow/sensors/base_sensor_operator.html
+https://stackoverflow.com/questions/43907813/cant-import-airflow-plugins
+https://stackoverflow.com/questions/58356263/count-total-values-in-each-row-of-dataframe-using-pyspark
+https://stackoverflow.com/questions/54045048/with-code-how-do-you-update-an-airflow-variable
+https://stackoverflow.com/questions/9733638/post-json-using-python-requests
+https://stackoverflow.com/questions/48229043/python-pyspark-count-null-empty-and-nan
+https://stackoverflow.com/questions/43882699/differences-between-null-and-nan-in-spark-how-to-deal-with-it/43883025
+https://medium.com/@dustinstansbury/understanding-apache-airflows-key-concepts-a96efed52b1a
+https://stackoverflow.com/questions/21660834/why-cant-pass-args-and-kwargs-in-init-of-a-child-class
+https://stackoverflow.com/questions/25407550/how-do-i-log-from-my-python-spark-script
+https://airflow.readthedocs.io/en/stable/_modules/airflow/hooks/S3_hook.html
+https://stackoverflow.com/questions/8858008/how-to-move-a-file-in-python
+https://stackoverflow.com/questions/39997714/airflow-s3-connection-using-ui
+https://stackoverflow.com/questions/41381365/cant-open-pem-file-in-keychain-access
