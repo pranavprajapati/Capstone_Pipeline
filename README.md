@@ -4,7 +4,7 @@
 
 This project involves data about businesses listed on yelp, and perform ETL such that the data can be further analysed. The dataset includes thousands of businesses and reviews and ratings related to them. It also includes data about the users and specifically where each user is checking in and all the places reviewed and rated by that user.
 
-Using the available data sources listed above, we build building an ETL pipeline that extracts their data from S3, processes them using Spark, and loads the data back into S3. The data lake, which will be hosted on S3 can be then used to query to find out what are the popular businesses according to each category, which could be useful for both users and owners etc. We also have a lot of text data, which can be later used to create a sentiment analysis report. There are long reviews as well as short tips, both which can say a lot about a business.
+Using the available data sources listed above, we will build an ETL pipeline that extracts their data from S3, processes them using Spark, and loads the data back into S3. The data lake, which will be hosted on S3 can be then used to query to find out what are the popular businesses according to each category, which could be useful for both users and owners etc. We also have a lot of text data, which can be later used to create a sentiment analysis report. There are long reviews as well as short tips, both which can say a lot about a business.
 
 ### 1. Scope the Project and Gather Data
 
