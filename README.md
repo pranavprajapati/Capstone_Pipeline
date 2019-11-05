@@ -1,4 +1,4 @@
-# Data Engineering Capstone Project
+# Capstone Project
 
 ## Project Summary
 
